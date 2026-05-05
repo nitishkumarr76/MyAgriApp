@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "36514491366",
+    "firebase_url": "https://my-agri-e0384-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "my-agri-e0384",
+    "storage_bucket": "my-agri-e0384.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36514491366:android:f2164847851911aee14427",
+        "android_client_info": {
+          "package_name": "com.example.myagri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36514491366-ddr57fm68qoocad9ern53u35kq9gcses.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myagri",
+            "certificate_hash": "6157c44c113e89cd8323ba8f31bfa039bb2b2640"
+          }
+        },
+        {
+          "client_id": "36514491366-iespvmupehbmsrrm80rtpicef8r7ggvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABHeLimrgjZB_PuVgwLoHExwIcaDtOxBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36514491366-iespvmupehbmsrrm80rtpicef8r7ggvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
