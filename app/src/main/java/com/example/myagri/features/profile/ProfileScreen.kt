@@ -1,9 +1,9 @@
-package com.example.myagri.screens
+package com.example.myagri.features.profile
 
 
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import com.example.myagri.auth.AuthViewModel
+import com.example.myagri.features.auth.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 import androidx.compose.foundation.Image
@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -164,7 +165,7 @@ fun ProfileScreen(innerNavController: NavController,
 @Composable
 fun ProfileItem(
     title: String,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     trailing: String? = null
 ) {
     Row(

@@ -1,4 +1,4 @@
-package com.example.myagri.screens
+package com.example.myagri.features.chat
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController

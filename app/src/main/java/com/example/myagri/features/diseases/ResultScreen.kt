@@ -1,4 +1,4 @@
-package com.example.myagri.screens
+package com.example.myagri.features.diseases
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

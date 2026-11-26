@@ -5,8 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-feature android:name="android.hardware.camera"/>
 
-    <!-- For Android 12 and below -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
@@ -21,7 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyAgri">
 
-        <!-- ✅ MAIN ACTIVITY -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -35,7 +34,6 @@
 
         </activity>
 
-        <!-- ✅ VERY IMPORTANT: FileProvider (for camera image) -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

@@ -1,5 +1,7 @@
-package com.example.myagri.screens
+package com.example.myagri.features.auth
 
+import android.app.Activity
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,6 +16,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -24,9 +27,15 @@ import androidx.navigation.NavController
 import com.example.myagri.R
 
 @Composable
-fun MobileNumberScreen(navController: NavController) {
+fun MobileNumberScreen(
+    navController: NavController,
+    viewModel: AuthViewModel
+) {
+    val context = LocalContext.current
+    val activity = context as Activity
 
     var phoneNumber by remember { mutableStateOf("") }
+    var loading by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -56,7 +65,7 @@ fun MobileNumberScreen(navController: NavController) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(60.dp))
 
             Text(
                 text = "Enter Your Phone Number",
@@ -74,16 +83,8 @@ fun MobileNumberScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                Image(
-                    painter = painterResource(R.drawable.img_3),
-                    contentDescription = null,
-                    modifier = Modifier.size(20.dp)
-                )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
                 Text("+91", fontWeight = FontWeight.Bold)
-
+                
                 TextField(
                     value = phoneNumber,
                     onValueChange = {
@@ -91,11 +92,12 @@ fun MobileNumberScreen(navController: NavController) {
                             phoneNumber = it
                         }
                     },
-                    placeholder = { Text("") },
+                    modifier = Modifier.weight(1f),
+                    placeholder = { Text("0000000000") },
                     singleLine = true,
                     textStyle = TextStyle(
-                        color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 16.sp
                     ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -112,15 +114,32 @@ fun MobileNumberScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    if (phoneNumber.length == 10) {
-                        navController.navigate("otp/$phoneNumber")
+                    if (phoneNumber.length == 10 && !loading) {
+
+                        loading = true
+                        val fullPhone = "+91$phoneNumber"
+
+                        viewModel.sendOtp(
+                            phone = fullPhone,
+                            activity = activity,
+                            onCodeSent = {
+                                loading = false
+                                navController.navigate("otp/$phoneNumber")
+                            },
+                            onError = {
+                                loading = false
+                                Log.e("OTP", it)
+                            }
+                        )
                     }
                 },
+                enabled = !loading,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
             ) {
-                Text("Send OTP",
+                Text(
+                    text = if (loading) "Sending..." else "Send OTP",
                     fontSize = 16.sp
                 )
             }

@@ -1,4 +1,4 @@
-package com.example.myagri.auth
+package com.example.myagri.data.remote
 
 import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignIn

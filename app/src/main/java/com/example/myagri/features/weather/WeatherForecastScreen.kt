@@ -1,6 +1,5 @@
-package com.example.myagri.screens
+package com.example.myagri.features.weather
 
-import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*

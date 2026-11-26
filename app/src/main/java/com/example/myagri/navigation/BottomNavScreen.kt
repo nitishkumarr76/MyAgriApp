@@ -1,4 +1,4 @@
-package com.example.myagri.screens
+package com.example.myagri.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +18,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.myagri.features.chat.ChatScreen
+import com.example.myagri.features.history.HistoryScreen
+import com.example.myagri.features.home.HomeScreen
+import com.example.myagri.features.shop.ShopScreen
 
 @Composable
 fun BottomNavScreen(innerNavController: NavController) {

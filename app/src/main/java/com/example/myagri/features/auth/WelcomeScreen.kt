@@ -1,4 +1,4 @@
-package com.example.myagri.screens
+package com.example.myagri.features.auth
 
 import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -6,8 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.example.myagri.auth.GoogleAuthHelper
-import com.example.myagri.auth.AuthViewModel
+import com.example.myagri.data.remote.GoogleAuthHelper
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Phone
@@ -86,14 +85,14 @@ fun WelcomeScreen(navController: NavController){
             horizontalAlignment = Alignment.Start
         ) {
 
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(70.dp))
 
             Text(
-                text = "Welcome to\nFarm Management",
+                text = "Welcome\nto Farm\nManagement",
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold,
-                fontSize = 34.sp,
-                lineHeight = 38.sp
+                fontSize = 36.sp,
+                lineHeight = 40.sp
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -107,6 +106,25 @@ fun WelcomeScreen(navController: NavController){
 
             Spacer(modifier = Modifier.weight(1f))
 
+            // Show Loading
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (isLoading){
+                    CircularProgressIndicator()
+                }
+
+            }
+
+            // Show error
+            if (errorMessage.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(errorMessage, color = Color.Red)
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
             Column(modifier = Modifier.fillMaxWidth()){
 
                 Button(
@@ -115,7 +133,7 @@ fun WelcomeScreen(navController: NavController){
                 ) {
                     Icon(Icons.Default.Phone, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Login with Phone")
+                    Text("Register with Phone", fontSize = 16.sp)
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -137,19 +155,7 @@ fun WelcomeScreen(navController: NavController){
                         modifier = Modifier.size(20.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Login with Google")
-                }
-
-                // 🔥 Show loading
-                if (isLoading) {
-                    Spacer(modifier = Modifier.height(12.dp))
-                    CircularProgressIndicator()
-                }
-
-                // 🔥 Show error
-                if (errorMessage.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(errorMessage, color = Color.Red)
+                    Text("Continue with Google", fontSize = 16.sp)
                 }
             }
         }

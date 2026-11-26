@@ -1,5 +1,6 @@
-package com.example.myagri.screens
+package com.example.myagri.features.auth
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -26,13 +27,18 @@ import com.example.myagri.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun OtpVerificationScreen(navController: NavController, phone: String) {
+fun OtpVerificationScreen(
+    navController: NavController,
+    phone: String,
+    viewModel: AuthViewModel
+) {
 
     val otpValues = remember { mutableStateListOf("", "", "", "", "", "") }
     val focusRequesters = List(6) { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
     var timeLeft by remember { mutableStateOf(30) }
+    var loading by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         focusRequesters[0].requestFocus()
@@ -73,7 +79,7 @@ fun OtpVerificationScreen(navController: NavController, phone: String) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(60.dp))
 
             Text(
                 text = "Verify Your Number",
@@ -84,16 +90,11 @@ fun OtpVerificationScreen(navController: NavController, phone: String) {
             Spacer(modifier = Modifier.height(10.dp))
 
             Text("We’ve sent a 6-digit OTP to")
-
             Text("+91 $phone", fontWeight = FontWeight.Bold)
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text(
-                "Enter OTP",
-                modifier = Modifier.fillMaxWidth(),
-                fontWeight = FontWeight.SemiBold
-            )
+            Text("Enter OTP", modifier = Modifier.fillMaxWidth())
 
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -135,9 +136,9 @@ fun OtpVerificationScreen(navController: NavController, phone: String) {
                         textStyle = TextStyle(
                             textAlign = TextAlign.Center,
                             fontSize = 20.sp,
+                            fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.onBackground,
-                            fontWeight = FontWeight.SemiBold
-                        ),
+                            ),
                         singleLine = true,
                         shape = RoundedCornerShape(12.dp),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -151,9 +152,12 @@ fun OtpVerificationScreen(navController: NavController, phone: String) {
 
             Text(
                 text = if (timeLeft > 0)
-                    "Resend in 00:${timeLeft.toString().padStart(2, '0')}"
+                    "Resend OTP in ${timeLeft.toString().padStart(2, '0')}s"
                 else "Resend OTP",
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable(enabled = timeLeft == 0) {
+                    // TODO: call resend OTP
+                }
             )
 
             Spacer(modifier = Modifier.height(40.dp))
@@ -161,15 +165,33 @@ fun OtpVerificationScreen(navController: NavController, phone: String) {
             Button(
                 onClick = {
                     val otp = otpValues.joinToString("")
-                    if (otp.length == 6) {
-                        navController.navigate("main")
+
+                    if (otp.length == 6 && !loading) {
+
+                        loading = true
+
+                        viewModel.verifyOtp(
+                            otp = otp,
+                            onSuccess = {
+                                loading = false
+                                navController.navigate("main") {
+                                    popUpTo("phone") { inclusive = true }
+                                }
+                            },
+                            onError = {
+                                loading = false
+                                Log.e("OTP", it)
+                            }
+                        )
                     }
                 },
+                enabled = !loading,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
             ) {
-                Text("Verify & Login",
+                Text(
+                    text = if (loading) "Verifying..." else "Verify & Login",
                     fontSize = 16.sp
                 )
             }

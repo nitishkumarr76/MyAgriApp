@@ -1,4 +1,4 @@
-package com.example.myagri.screens
+package com.example.myagri.features.home
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -221,7 +222,7 @@ fun HomeScreen(innerNavController: NavController) {
 @Composable
 fun QuickItem(
     title: String,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {

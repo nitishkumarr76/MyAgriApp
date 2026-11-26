@@ -1,4 +1,4 @@
-package com.example.myagri.screens
+package com.example.myagri.features.diseases
 
 import android.Manifest
 import android.content.Context

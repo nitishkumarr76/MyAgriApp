@@ -1,9 +1,9 @@
-package com.example.myagri.screens
+package com.example.myagri.features.shop
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
 @Composable
-fun HistoryScreen(innerNavController: NavController){
+fun ShopScreen(innerNavController: NavController){
 
 }
